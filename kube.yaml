@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: medium-redirector
+  namespace: default
+  labels:
+    component: utility
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      component: medium-redirector
+  template:
+    metadata:
+      labels:
+        component: medium-redirector
+    spec:
+      containers:
+      - name: medium-redirector
+        image: underscorenygren/medium-redirector:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 10M
+          limits:
+            cpu: 200m
+            memory: 20M
+        env:
+        - name: DEBUG
+          value: "yes"
+        - name: MEDIUM_NAME
+          value: "parsec"
+        - name: ENABLE_SSL
+          value: ""
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: medium-redirector
+  labels:
+    component: utility
+spec:
+  selector:
+    component: medium-redirector
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  type: "ClusterIP"
