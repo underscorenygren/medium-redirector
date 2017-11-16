@@ -1,0 +1,7 @@
+  server {
+    listen 443 ssl;
+    ssl_certificate SSL_CERT;
+    ssl_certificate_key SSL_KEY;
+
+    include /etc/nginx/include.redirect;
+  }

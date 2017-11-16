@@ -1,0 +1,11 @@
+location ~* (?<id>[0-9a-f]+)$ {
+  return 301 http://medium.com/MEDIUM_NAME/$id;
+}
+
+location /test/ {
+  return 200 "ok";
+}
+
+location / {
+  return 404;
+}
