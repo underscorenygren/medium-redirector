@@ -7,5 +7,5 @@ location /test/ {
 }
 
 location / {
-  return 404;
+  return 301 http://medium.com/MEDIUM_NAME/;
 }
